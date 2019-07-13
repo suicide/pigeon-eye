@@ -78,15 +78,16 @@ lazy val app = Project(
     crossPaths := false
   )
   .settings(commonSettings: _*)
-  .settings({
-    dockerExposedPorts := Nil
-    packageName in Docker := "pigeon-eye"
-//    version in Docker := "latest"
-    maintainer in Docker := "Patrick Sy <suicide@get-it.us>"
-    dockerUsername := Some("suicide")
-//    dockerRepository := Some("registry.hub.docker.com/suicide/pigeon-eye")
-    dockerUpdateLatest := true
-  })
+  .settings(Seq(
+    dockerBaseImage := "openjdk:8-jdk-slim",
+    dockerExposedPorts := Nil,
+    packageName in Docker := "pigeon-eye",
+//    version in Docker := "latest",
+    maintainer in Docker := "Patrick Sy <suicide@get-it.us>",
+    dockerUsername := Some("suicide"),
+//    dockerRepository := Some("docker.io"),
+    dockerUpdateLatest := true,
+  ))
   .enablePlugins(JavaAppPackaging, UniversalDeployPlugin, DockerPlugin)
   .dependsOn(core)
 
